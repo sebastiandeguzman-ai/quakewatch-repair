@@ -1,6 +1,13 @@
 # Repair log
 
-Study group: ______________________   Members: ______________________________________________
+Study group: 1 
+
+Members: 
+SEBASTIAN DE GUZMAN,
+VENICE CARTERA,
+DARYLLE BALBIN,
+CHARLIZE FETALCORIN,
+RHIANNE GRANADOS
 
 ## Defects
 
@@ -17,7 +24,7 @@ Study group: ______________________   Members: _________________________________
 
 | Test name | Tool used (`parametrize`, fake API, `caplog`) | What it proves | Fails on the broken code? | Written by |
 | --- | --- | --- | --- | --- |
-| tests_group.py | @pytest.mark.parametrize | features_stage() runs cleanly using depth_km and converts UTC timestamps accurately to Asia/Manila (+08:00) across day boundaries. | Yes | Darylle Balbin |
+| test_group.py | @pytest.mark.parametrize | features_stage() runs cleanly using depth_km and converts UTC timestamps accurately to Asia/Manila (+08:00) across day boundaries. | Yes | Darylle Balbin |
 | | | | | |
 | | | | | |
 
