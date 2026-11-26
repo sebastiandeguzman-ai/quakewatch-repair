@@ -139,7 +139,7 @@ def haversine_km(lat1, lon1, lat2, lon2):
 
 def nearest_city(events, cities):
     """Return (city_id, distance in km) of the nearest city for every event."""
-    D = haversine_km(events["longitude"].to_numpy()[:, None], events["latitude"].to_numpy()[:, None],
+    D = haversine_km(events["latitude"].to_numpy()[:, None], events["longitude"].to_numpy()[:, None],
                      cities["latitude"].to_numpy()[None, :], cities["longitude"].to_numpy()[None, :])
     return cities["city_id"].to_numpy()[D.argmin(axis=1)], D.min(axis=1)
 

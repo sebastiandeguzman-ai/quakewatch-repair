@@ -1,3 +1,4 @@
+import logging
 import pandas as pd
 import pytest
 import quakewatch as qw
@@ -55,4 +56,33 @@ def test_depth_class_boundaries(depth_km, expected):
 def test_mag_class_6_0_is_strong():
     result = qw.mag_class(pd.Series([5.9, 6.0, 6.9, 7.0]))
     assert list(result) == ["Moderate", "Strong", "Strong", "Major"]
-    
+
+   
+def test_nearest_city_uses_lat_lon_order():   # Defect 4
+    events = pd.DataFrame({
+        "latitude": [8.5, 17.6],
+        "longitude": [126.5, 121.7],
+    })
+    cities = pd.DataFrame({
+        "city_id": ["C10", "C04"],
+        "latitude": [8.95, 17.61],      # Butuan, Tuguegarao
+        "longitude": [125.54, 121.73],
+    })
+    city_ids, dist_km = qw.nearest_city(events, cities)
+    assert list(city_ids) == ["C10", "C04"]
+    assert dist_km[0] < 150
+    assert dist_km[1] < 20
+
+
+def test_rejected_rows_emit_warning(loaded, caplog):   # caplog requirement
+    bad = qw.read_raw().head(1).copy()
+    bad["id"] = "bad-depth-caplog"
+    bad["depth_km"] = -5.0
+    qw.save_raw(bad)
+
+    with caplog.at_level(logging.WARNING, logger="quakewatch"):
+        qw.integrate()
+
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+    assert len(warnings) >= 1
+    assert any("reject" in r.getMessage().lower() for r in warnings) 
