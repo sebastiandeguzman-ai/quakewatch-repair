@@ -171,10 +171,10 @@ def depth_class(depth_km):
 
 def features_stage():
     t = pd.read_parquet(CLEAN / "events.parquet").sort_values("time").reset_index(drop=True)
-    t["local"] = t["time"].dt.tz_localize(None).dt.tz_localize("Asia/Manila")
+    t["local"] = t["time"].dt.tz_convert("Asia/Manila")
     t["hour_local"] = t["local"].dt.hour
     t["energy_j"] = 10 ** (1.5 * t["mag"] + 4.8)
-    t["depth_class"] = depth_class(t["depth"])
+    t["depth_class"] = depth_class(t["depth_km"])
     t["mag_class"] = mag_class(t["mag"])
     t["gap_h"] = t["time"].diff().dt.total_seconds() / 3600
     t["burst_id"] = (t["gap_h"] > 24).cumsum()
