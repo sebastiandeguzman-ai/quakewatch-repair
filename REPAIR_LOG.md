@@ -1,6 +1,6 @@
 # Repair log
 
-Study group: ______________________   Members: Darylle Balbin, Seb, Venice, Charlize, Rhianne
+Study group: ______________________   Members: ______________________________________________
 
 ## Defects
 
@@ -18,7 +18,7 @@ Study group: ______________________   Members: Darylle Balbin, Seb, Venice, Char
 | Test name | Tool used (`parametrize`, fake API, `caplog`) | What it proves | Fails on the broken code? | Written by |
 | --- | --- | --- | --- | --- |
 | tests_group.py | @pytest.mark.parametrize | features_stage() runs cleanly using depth_km and converts UTC timestamps accurately to Asia/Manila (+08:00) across day boundaries. | Yes | Darylle Balbin |
-| test_mag_class_6_0_is_strong | unit test | Verifies mag_class() classifies 5.9 as Moderate, 6.0 and 6.9 as Strong, and 7.0 as Major. | Yes | Seb |
+| | | | | |
 | | | | | |
 
 ## Logging we added
