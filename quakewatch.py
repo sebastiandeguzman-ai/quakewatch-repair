@@ -30,7 +30,7 @@ AREA = {"minmagnitude": 5, "minlatitude": 4, "maxlatitude": 22,
         "minlongitude": 116, "maxlongitude": 130, "orderby": "time-asc", "format": "geojson"}
 FIRST_DAY, LAST_DAY = "2020-01-01", "2025-01-01"
 RAW, CLEAN, FEAT, FIGS = Path("data/raw"), Path("data/clean"), Path("data/features"), Path("figures")
-MAG_BINS = [4.95, 6.05, 6.95, 7.95, 10]
+MAG_BINS = [4.95, 5.95, 6.95, 7.95, 10]
 MAG_LABELS = ["Moderate", "Strong", "Major", "Great"]
 CALLS = {"n": 0}                      # counts every API call
 

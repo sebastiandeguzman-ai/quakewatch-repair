@@ -37,4 +37,22 @@ def test_local_time_is_converted_to_manila(tmp_path, monkeypatch, utc, manila): 
     row = _run_features(tmp_path, monkeypatch, utc, 10.0)
     assert row["local"].strftime("%Y-%m-%d %H:%M") == manila
     assert row["hour_local"] == int(manila[11:13])
+
+
+@pytest.mark.parametrize("depth_km, expected", [
+    (0.0, "shallow"),
+    (69.9, "shallow"),
+    (70.0, "intermediate"),
+    (299.9, "intermediate"),
+    (300.0, "deep"),
+    (650.0, "deep"),
+])
+def test_depth_class_boundaries(depth_km, expected):
+    result = qw.depth_class(pd.Series([depth_km]))
+    assert result[0] == expected
+
+
+def test_mag_class_6_0_is_strong():
+    result = qw.mag_class(pd.Series([5.9, 6.0, 6.9, 7.0]))
+    assert list(result) == ["Moderate", "Strong", "Strong", "Major"]
     
