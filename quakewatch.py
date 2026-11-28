@@ -100,15 +100,32 @@ def save_raw(table):
         folder.mkdir(parents=True, exist_ok=True)
         part.to_parquet(folder / f"events_{stamp}.parquet", index=False)
 
-
 def load_new(until=LAST_DAY):
-    """Fetch only what is not saved yet. Returns the number of new rows."""
-    fetched = fetch_range(FIRST_DAY, until)
+    """Fetch only what is not saved yet. Returns the number of new rows.
+
+    Starts at the watermark (latest saved time) instead of FIRST_DAY, and drops any
+    event whose id is already in data/raw, so running twice never duplicates rows.
+    """
+    mark = watermark()
+    if mark is None:
+        start = FIRST_DAY
+    else:
+        # the API's starttime is inclusive, so the event at the watermark comes back
+        # again; the id filter below removes it
+        start = mark.strftime("%Y-%m-%dT%H:%M:%S")
+    try:
+        fetched = fetch_range(start, until)
+    except requests.RequestException:
+        log.exception("acquire: API request failed (start=%s, until=%s)", start, until)
+        raise
+    if mark is not None and len(fetched):
+        seen = set(read_raw()["id"])
+        fetched = fetched[~fetched["id"].isin(seen)]
+    fetched = fetched.drop_duplicates(subset="id").reset_index(drop=True)
     if len(fetched):
         save_raw(fetched)
     log.info("acquire: %d new rows", len(fetched))
     return len(fetched)
-
 
 # ---------------------------------------------------------------- integrate
 CONTRACT = pa.DataFrameSchema({

@@ -19,6 +19,7 @@ def _run_features(tmp_path, monkeypatch, utc, depth_km):
     return qw.features_stage().iloc[0]
 
 
+
 @pytest.mark.parametrize("depth_km, expected", [
     (10.0, "shallow"), (69.9, "shallow"),
     (70.0, "intermediate"), (299.9, "intermediate"),
@@ -86,3 +87,19 @@ def test_rejected_rows_emit_warning(loaded, caplog):   # caplog requirement
     warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
     assert len(warnings) >= 1
     assert any("reject" in r.getMessage().lower() for r in warnings) 
+
+import quakewatch as qw
+
+
+def test_resumed_load_has_no_duplicates(project):
+    """Defect 5: a load that resumes from the watermark must not save any event twice."""
+    first = qw.load_new(until="2022-01-01")      # part of the history
+    second = qw.load_new()                       # the rest; the watermark event comes back too
+    third = qw.load_new()                        # nothing is left
+
+    raw = qw.read_raw()
+    assert first > 0
+    assert first + second == 462
+    assert third == 0
+    assert len(raw) == 462
+    assert raw["id"].is_unique
