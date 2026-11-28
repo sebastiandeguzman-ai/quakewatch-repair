@@ -21,6 +21,7 @@ import pandas as pd
 import pandera.pandas as pa
 import requests
 from requests.adapters import HTTPAdapter, Retry
+from pandera.errors import SchemaErrors
 
 log = logging.getLogger("quakewatch")
 
@@ -141,10 +142,14 @@ CONTRACT = pa.DataFrameSchema({
 def split_by_contract(raw):
     """Return (good rows, rejected rows)."""
     try:
-        CONTRACT.validate(raw)
-    except Exception:
-        pass
-    return raw, raw.iloc[0:0]
+        CONTRACT.validate(raw, lazy=True)
+        return raw, raw.iloc[0:0]
+    except SchemaErrors as err:
+        bad_idx = err.failure_cases["index"].dropna().unique()
+        rejects = raw.loc[raw.index.isin(bad_idx)]
+        good = raw.drop(index=rejects.index)
+        log.warning("integrate: %d rows rejected by contract", len(rejects))
+        return good, rejects
 
 
 def haversine_km(lat1, lon1, lat2, lon2):

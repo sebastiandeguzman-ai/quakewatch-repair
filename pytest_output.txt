@@ -1,0 +1,49 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0 -- /opt/anaconda3/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/rhianneadreana/Documents/quakewatch-repair
+plugins: anyio-4.12.1, typeguard-4.6.1
+collecting ... collected 40 items
+
+tests/test_acquire.py::test_first_load_gets_every_event PASSED           [  2%]
+tests/test_acquire.py::test_second_load_adds_nothing PASSED              [  5%]
+tests/test_acquire.py::test_ids_stay_unique_after_two_loads PASSED       [  7%]
+tests/test_features.py::test_features_stage_runs PASSED                  [ 10%]
+tests/test_features.py::test_strongest_event_is_at_night_in_manila PASSED [ 12%]
+tests/test_features.py::test_mag_class_edges[5.0-Moderate] PASSED        [ 15%]
+tests/test_features.py::test_mag_class_edges[5.9-Moderate] PASSED        [ 17%]
+tests/test_features.py::test_mag_class_edges[6.0-Strong] PASSED          [ 20%]
+tests/test_features.py::test_mag_class_edges[6.9-Strong] PASSED          [ 22%]
+tests/test_features.py::test_mag_class_edges[7.0-Major] PASSED           [ 25%]
+tests/test_features.py::test_mag_class_edges[7.9-Major] PASSED           [ 27%]
+tests/test_features.py::test_mag_class_edges[8.0-Great] PASSED           [ 30%]
+tests/test_features.py::test_strong_or_above_count PASSED                [ 32%]
+tests/test_features.py::test_depth_classes PASSED                        [ 35%]
+tests/test_group.py::test_depth_class_uses_depth_km[10.0-shallow] PASSED [ 37%]
+tests/test_group.py::test_depth_class_uses_depth_km[69.9-shallow] PASSED [ 40%]
+tests/test_group.py::test_depth_class_uses_depth_km[70.0-intermediate] PASSED [ 42%]
+tests/test_group.py::test_depth_class_uses_depth_km[299.9-intermediate] PASSED [ 45%]
+tests/test_group.py::test_depth_class_uses_depth_km[300.0-deep] PASSED   [ 47%]
+tests/test_group.py::test_depth_class_uses_depth_km[600.0-deep] PASSED   [ 50%]
+tests/test_group.py::test_local_time_is_converted_to_manila[2023-12-02T14:37:00Z-2023-12-02 22:37] PASSED [ 52%]
+tests/test_group.py::test_local_time_is_converted_to_manila[2023-12-02T20:00:00Z-2023-12-03 04:00] PASSED [ 55%]
+tests/test_group.py::test_local_time_is_converted_to_manila[2020-01-01T00:00:00Z-2020-01-01 08:00] PASSED [ 57%]
+tests/test_group.py::test_depth_class_boundaries[0.0-shallow] PASSED     [ 60%]
+tests/test_group.py::test_depth_class_boundaries[69.9-shallow] PASSED    [ 62%]
+tests/test_group.py::test_depth_class_boundaries[70.0-intermediate] PASSED [ 65%]
+tests/test_group.py::test_depth_class_boundaries[299.9-intermediate] PASSED [ 67%]
+tests/test_group.py::test_depth_class_boundaries[300.0-deep] PASSED      [ 70%]
+tests/test_group.py::test_depth_class_boundaries[650.0-deep] PASSED      [ 72%]
+tests/test_group.py::test_mag_class_6_0_is_strong PASSED                 [ 75%]
+tests/test_group.py::test_nearest_city_uses_lat_lon_order PASSED         [ 77%]
+tests/test_group.py::test_rejected_rows_emit_warning PASSED              [ 80%]
+tests/test_group.py::test_resumed_load_has_no_duplicates PASSED          [ 82%]
+tests/test_group.py::test_split_by_contract_rejects_bad_rows PASSED      [ 85%]
+tests/test_integrate.py::test_contract_accepts_the_real_data PASSED      [ 87%]
+tests/test_integrate.py::test_nearest_city_of_known_events[2023-12-02 14:37-C10] PASSED [ 90%]
+tests/test_integrate.py::test_nearest_city_of_known_events[2022-07-27 00:43-C04] PASSED [ 92%]
+tests/test_integrate.py::test_nearest_city_of_known_events[2021-07-23 20:49-C01] PASSED [ 95%]
+tests/test_integrate.py::test_bad_rows_are_set_aside PASSED              [ 97%]
+tests/test_pipeline.py::test_run_twice_gives_the_same_numbers PASSED     [100%]
+
+============================== 40 passed in 0.85s ==============================

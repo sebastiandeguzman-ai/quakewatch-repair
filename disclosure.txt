@@ -1,0 +1,13 @@
+DSA4153 Week 15 - Disclosure
+
+Group 1
+
+Members and who did what:
+- Darylle: Fixed Defect 1 (depth_km column name) and Defect 2 (UTC to Manila time conversion). Wrote the parametrize tests in tests/test_group.py.
+- Sebastian: Fixed Defect 3 (MAG_BINS so 6.0 is labelled Strong). Wrote the fake API test in tests/test_group.py.
+- Charlize: Fixed Defect 4 (swapped latitude and longitude in nearest_city). Wrote the caplog test in tests/test_group.py.
+- Venice: Fixed Defect 5 (incremental load using the watermark). Added the logging (WARNING for rejected rows, log.exception for caught errors, logs/run.log in run.py). Wrote one additional test.
+- Rhianne: Fixed Defect 6 (split_by_contract now rejects rows that break the contract instead of swallowing the errors). Wrote one additional test. Filled in the final REPAIR_LOG.md entries, ran python run.py twice, generated pytest_output.txt, and packaged the submission zip.
+
+AI tools used:
+- Claude (Anthropic) was used to understand the concepts and provide help when necessary.

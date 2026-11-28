@@ -103,3 +103,15 @@ def test_resumed_load_has_no_duplicates(project):
     assert third == 0
     assert len(raw) == 462
     assert raw["id"].is_unique
+
+def test_split_by_contract_rejects_bad_rows():
+    import pandas as pd
+    from quakewatch import split_by_contract
+    raw = pd.DataFrame({
+        "id": ["a", "b"], "mag": [5.5, 3.0],            # 3.0 breaks mag >= 5
+        "depth_km": [10.0, 20.0], "latitude": [14.0, 14.0],
+        "longitude": [121.0, 121.0], "place": ["x", "y"],
+    })
+    good, rejects = split_by_contract(raw)
+    assert list(good["id"]) == ["a"]
+    assert list(rejects["id"]) == ["b"]
